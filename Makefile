@@ -1,7 +1,7 @@
 frontendcount = 1
 backendcount = 1
 namespace = default
-frontendtype = LoadBalancer
+frontendtype = NodePort
 appname = lmnzr
 
 define README
