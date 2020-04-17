@@ -84,4 +84,4 @@ make uninstall
 
 ## FrontEnd Application
 
-[More Info Here](https://feature-api-dev.halofina.com/kyc)
+[More Info Here](https://github.com/lmnzr/go-triviapp/tree/master/frontend)
