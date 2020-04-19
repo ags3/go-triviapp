@@ -23,6 +23,16 @@ frontend:
     ports:
       containerPort: 80
 
+  hpa:
+    enabled: true
+    maxReplica: 3
+    minReplica: 1
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          targetAverageUtilization: 60
+
   imagePullSecrets: []
 
   podSecurityContext: {}
@@ -51,7 +61,7 @@ frontend:
       # kubernetes.io/tls-acme: "true"
     hosts:
       - host: chart-example.local
-        paths: 
+        paths:
           - /
     tls: []
     #  - secretName: chart-example-tls
@@ -73,9 +83,9 @@ backend:
   image:
     repository: lmnzr/triviabackend
     pullPolicy: Always
-  
+
   hpa:
-    enabled: false
+    enabled: true
     maxReplica: 3
     minReplica: 1
     metrics:
@@ -98,4 +108,3 @@ backend:
   tolerations: []
 
   affinity: {}
-
