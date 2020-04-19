@@ -49,6 +49,14 @@ In Order to run everything correctly,
 
 - **backendcount** -- Replication count for backend application [default:1]
 
+- **frontendhpa** --  Enable Horizontal Pod Autoscaler for Frontend Pod. 
+                      You can configure your own autoscaling trigger in values.yaml. 
+				      By default it is not enabled. [default:false]
+
+- **backendhpa** -- Enable Horizontal Pod Autoscaler for Backend Pod. 
+                    You can configure your own autoscaling trigger in values.yaml. 
+				    By default it is not enabled. [default:false]
+
 #### Usage Example
 
 Simple Installation

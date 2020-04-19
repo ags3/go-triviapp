@@ -1,5 +1,7 @@
 frontendcount = 1
 backendcount = 1
+frontendhpa = false
+backendhpa = false
 namespace = default
 frontendtype = NodePort
 appname = lmnzr
@@ -30,6 +32,12 @@ Parameter list
 ~ frontendtype   Service type for frontend application (ClusterIP,NodePort,LoadBalancer) [default : NodePort]
 ~ frontendcount  Replication count for frontend application [default : 1]
 ~ backendcount   Replication count for backend application [default : 1]
+~ frontendhpa    Enable Horizontal Pod Autoscaler for Frontend Pod. 
+                 You can configure your own autoscaling trigger in values.yaml. 
+				 By default it is not enabled. [default : false]
+~ backendhpa     Enable Horizontal Pod Autoscaler for Backend Pod. 
+                 You can configure your own autoscaling trigger in values.yaml. 
+				 By default it is not enabled. [default : false]
 
 Example
 --Simple Installation--
@@ -51,16 +59,19 @@ endef
 export README
 
 install:
-	@ helm install $(appname) ./triviapp --set backend.replicaCount=$(backendcount)\
-        --set frontend.replicaCount=$(frontendcount) --set frontend.service.type=$(frontendtype)\
+	@ helm install $(appname) ./triviapp --set backend.replicaCount=$(backendcount) \
+        --set frontend.replicaCount=$(frontendcount) --set frontend.service.type=$(frontendtype) \
+		--set frontend.hpa.enabled=$(frontendhpa) --set backend.hpa.enabled=$(backendhpa) \
         --namespace $(namespace) || (echo "App Already Installed, Running Upgrade Instead" && make upgrade)
 upgrade:
-	@ helm upgrade $(appname) ./triviapp --set backend.replicaCount=$(backendcount)\
-        --set frontend.replicaCount=$(frontendcount) --set frontend.service.type=$(frontendtype)\
+	@ helm upgrade $(appname) ./triviapp --set backend.replicaCount=$(backendcount) \
+        --set frontend.replicaCount=$(frontendcount) --set frontend.service.type=$(frontendtype) \
+		--set frontend.hpa.enabled=$(frontendhpa)  --set backend.hpa.enabled=$(backendhpa) \
         --namespace $(namespace)
 plan:
 	@ helm install --debug --dry-run $(appname) ./triviapp\
         --set backend.replicaCount=$(backendcount) --set frontend.replicaCount=$(frontendcount)\
+		--set frontend.hpa.enabled=$(frontendhpa)  --set backend.hpa.enabled=$(backendhpa) \
         --set frontend.service.type=$(frontendtype) --namespace $(namespace)
 uninstall:
 	@ helm uninstall $(appname) --namespace $(namespace)

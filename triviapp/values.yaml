@@ -24,7 +24,7 @@ frontend:
       containerPort: 80
 
   hpa:
-    enabled: true
+    enabled: false
     maxReplica: 3
     minReplica: 1
     metrics:
@@ -85,7 +85,7 @@ backend:
     pullPolicy: Always
 
   hpa:
-    enabled: true
+    enabled: false
     maxReplica: 3
     minReplica: 1
     metrics:
