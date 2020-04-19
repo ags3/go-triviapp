@@ -73,6 +73,16 @@ backend:
   image:
     repository: lmnzr/triviabackend
     pullPolicy: Always
+  
+  hpa:
+    enabled: false
+    maxReplica: 3
+    minReplica: 1
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          targetAverageUtilization: 60
 
   imagePullSecrets: []
 

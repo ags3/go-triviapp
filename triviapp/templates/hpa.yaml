@@ -1,0 +1,17 @@
+{{- if .Values.backend.hpa.enabled -}}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name:  {{ include "triviabackend.fullname" . }}
+spec:
+  maxReplicas: {{ .Values.backend.hpa.maxReplica }}
+  minReplicas: {{ .Values.backend.hpa.minReplica }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "triviabackend-deployment.fullname" . }}
+{{- with .Values.backend.hpa.metrics }}
+  metrics:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
+{{- end }}
